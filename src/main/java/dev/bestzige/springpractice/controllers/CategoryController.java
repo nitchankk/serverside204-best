@@ -1,8 +1,10 @@
 package dev.bestzige.springpractice.controllers;
 
 import dev.bestzige.springpractice.dtos.CategoryDTO;
+import dev.bestzige.springpractice.dtos.CreateCategoryDto;
 import dev.bestzige.springpractice.entities.Category;
 import dev.bestzige.springpractice.services.CategoryService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +38,13 @@ public class CategoryController {
     }
 
     @PostMapping("")
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CreateCategoryDto category) {
+        return ResponseEntity.ok(categoryService.createCategory(category));
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Integer categoryId, @RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.ok(categoryService.updateCategory(categoryId, categoryDTO));
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Integer categoryId, @Valid @RequestBody CreateCategoryDto category) {
+        return ResponseEntity.ok(categoryService.updateCategory(categoryId, category));
     }
 
     @DeleteMapping("/{categoryId}")

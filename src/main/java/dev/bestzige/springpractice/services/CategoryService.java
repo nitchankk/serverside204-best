@@ -1,6 +1,7 @@
 package dev.bestzige.springpractice.services;
 
 import dev.bestzige.springpractice.dtos.CategoryDTO;
+import dev.bestzige.springpractice.dtos.CreateCategoryDto;
 import dev.bestzige.springpractice.entities.Category;
 import dev.bestzige.springpractice.repositories.CategoryRepository;
 import jakarta.transaction.Transactional;
@@ -32,17 +33,17 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        Category category = modelMapper.map(categoryDTO, Category.class);
+    public CategoryDTO createCategory(CreateCategoryDto data) {
+        Category category = modelMapper.map(data, Category.class);
         category.setId(null);
         return modelMapper.map(categoryRepository.save(category), CategoryDTO.class);
     }
 
     @Transactional
-    public CategoryDTO updateCategory(Integer categoryId, CategoryDTO categoryDTO) {
+    public CategoryDTO updateCategory(Integer categoryId, CreateCategoryDto data) {
         Category category = getCategory(categoryId);
         if (category == null) throw notFound(categoryId);
-        modelMapper.map(categoryDTO, category);
+        modelMapper.map(data, category);
         return modelMapper.map(categoryRepository.save(category), CategoryDTO.class);
     }
 
